@@ -11,7 +11,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.TMDBTestApp">
+        android:theme="@style/Theme.TMDBTestApp"
+        android:name=".TMDBApp">
 
         <activity android:name=".presentation.MainActivity">
             <intent-filter>

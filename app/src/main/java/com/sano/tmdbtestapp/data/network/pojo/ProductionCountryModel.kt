@@ -1,4 +1,4 @@
-package com.sano.tmdbtestapp.data.pojo
+package com.sano.tmdbtestapp.data.network.pojo
 
 import com.google.gson.annotations.SerializedName
 

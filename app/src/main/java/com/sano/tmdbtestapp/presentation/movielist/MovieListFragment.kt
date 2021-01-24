@@ -34,7 +34,9 @@ class MovieListFragment: BaseFragment(R.layout.fragment_movie_list) {
             override fun onMovieEntityClick(movieEntity: MovieEntity) {
                 parentFragmentManager
                     .beginTransaction()
-                    .add(R.id.container, MovieDetailsFragment.newInstance(movieEntity.id))
+                    .add(R.id.container, MovieDetailsFragment.newInstance(movieEntity.id).apply {
+                        setTargetFragment(this@MovieListFragment, 1)
+                    })
                     .addToBackStack(null)
                     .commit()
             }

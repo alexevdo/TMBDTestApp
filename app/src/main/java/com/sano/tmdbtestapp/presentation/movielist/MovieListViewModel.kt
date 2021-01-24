@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sano.tmdbtestapp.TMDBApp
 import com.sano.tmdbtestapp.data.MovieRepository
-import com.sano.tmdbtestapp.data.NetworkDataSource
+import com.sano.tmdbtestapp.data.db.DbDataSource
+import com.sano.tmdbtestapp.data.network.NetworkDataSource
 import com.sano.tmdbtestapp.domain.IMovieInteractor
 import com.sano.tmdbtestapp.domain.MovieInteractor
 import com.sano.tmdbtestapp.domain.entity.MovieEntity
@@ -14,7 +16,8 @@ import kotlinx.coroutines.launch
 
 class MovieListViewModel : ViewModel() {
 
-    private val interactor: IMovieInteractor = MovieInteractor(MovieRepository(NetworkDataSource()))
+    private val interactor: IMovieInteractor =
+        MovieInteractor(MovieRepository(NetworkDataSource(), DbDataSource(TMDBApp.context)))
     private var dataState: MovieListState.DataState? = null
     private var searchDataState: MovieListState.DataState? = null
 
@@ -24,10 +27,16 @@ class MovieListViewModel : ViewModel() {
     fun intent(intent: MovieListIntent) {
         when (intent) {
             MovieListIntent.LoadPopularMovies -> {
+                dataState?.let {
+                    if(it.page == it.totalPages) return
+                }
                 mutableStateLiveData.value = MovieListState.LoadingState
                 viewModelScope.launch {
                     try {
-                        val result: PagedEntity<MovieEntity>? = interactor.loadPopularMovies((dataState?.page ?: 0) + 1 )
+                        val result: PagedEntity<MovieEntity>? = interactor.loadPopularMovies(
+                            (dataState?.page ?: 0) + 1,
+                            dataState == null
+                        )
                         result?.values?.let {
                             reduceDataState(
                                 MovieListState.DataState(
@@ -62,10 +71,11 @@ class MovieListViewModel : ViewModel() {
 
     private fun reduceDataState(newState: MovieListState.DataState) {
         dataState = MovieListState.DataState(
-        (dataState?.data ?: emptyList()) + newState.data,
+            (dataState?.data ?: emptyList()) + newState.data,
             newState.page,
             newState.totalPages,
-            newState.totalCount)
+            newState.totalCount
+        )
 
         mutableStateLiveData.value = dataState
     }
@@ -86,5 +96,5 @@ sealed class MovieListState {
 sealed class MovieListIntent {
     object LoadPopularMovies : MovieListIntent()
     data class SearchMovies(val query: String) : MovieListIntent()
-    object ResetDataToPopularMovies: MovieListIntent()
+    object ResetDataToPopularMovies : MovieListIntent()
 }

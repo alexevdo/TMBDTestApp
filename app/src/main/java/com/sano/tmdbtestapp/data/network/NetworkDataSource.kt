@@ -1,9 +1,9 @@
-package com.sano.tmdbtestapp.data
+package com.sano.tmdbtestapp.data.network
 
 import com.sano.tmdbtestapp.BuildConfig
-import com.sano.tmdbtestapp.data.pojo.MovieDetailsModel
-import com.sano.tmdbtestapp.data.pojo.PagedResponse
-import com.sano.tmdbtestapp.data.service.MovieService
+import com.sano.tmdbtestapp.data.network.pojo.MovieDetailsModel
+import com.sano.tmdbtestapp.data.network.pojo.PagedResponse
+import com.sano.tmdbtestapp.data.network.service.MovieService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

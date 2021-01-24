@@ -6,6 +6,6 @@ import com.sano.tmdbtestapp.domain.entity.PagedEntity
 
 interface IMovieInteractor {
     suspend fun searchMovies(query: String): PagedEntity<MovieEntity>?
-    suspend fun loadPopularMovies(page: Int): PagedEntity<MovieEntity>?
+    suspend fun loadPopularMovies(page: Int, isInitialRequest: Boolean): PagedEntity<MovieEntity>?
     suspend fun getMovieDetails(moviesId: Int): MovieDetailsEntity?
 }

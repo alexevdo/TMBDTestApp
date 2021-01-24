@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sano.tmdbtestapp.TMDBApp
 import com.sano.tmdbtestapp.data.MovieRepository
-import com.sano.tmdbtestapp.data.NetworkDataSource
+import com.sano.tmdbtestapp.data.db.DbDataSource
+import com.sano.tmdbtestapp.data.network.NetworkDataSource
 import com.sano.tmdbtestapp.domain.IMovieInteractor
 import com.sano.tmdbtestapp.domain.MovieInteractor
 import com.sano.tmdbtestapp.domain.entity.MovieDetailsEntity
@@ -15,7 +17,7 @@ import java.lang.Exception
 
 class MovieDetailsViewModel: ViewModel() {
 
-    private val interactor: IMovieInteractor = MovieInteractor(MovieRepository(NetworkDataSource()))
+    private val interactor: IMovieInteractor = MovieInteractor(MovieRepository(NetworkDataSource(), DbDataSource(TMDBApp.context)))
     private var dataState: MovieListState.DataState? = null
 
     private val mutableStateLiveData: MutableLiveData<MovieDetailsState> = MutableLiveData()

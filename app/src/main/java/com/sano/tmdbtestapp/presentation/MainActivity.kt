@@ -2,6 +2,7 @@ package com.sano.tmdbtestapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.room.Room
 import com.sano.tmdbtestapp.R
 import com.sano.tmdbtestapp.presentation.movielist.MovieListFragment
 
@@ -14,5 +15,6 @@ class MainActivity : AppCompatActivity() {
             .beginTransaction()
             .add(R.id.container, MovieListFragment())
             .commit()
+
     }
 }

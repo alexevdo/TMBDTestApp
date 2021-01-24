@@ -1,7 +1,7 @@
-package com.sano.tmdbtestapp.data
+package com.sano.tmdbtestapp.data.network
 
-import com.sano.tmdbtestapp.data.pojo.MovieDetailsModel
-import com.sano.tmdbtestapp.data.pojo.PagedResponse
+import com.sano.tmdbtestapp.data.network.pojo.MovieDetailsModel
+import com.sano.tmdbtestapp.data.network.pojo.PagedResponse
 
 interface INetworkDataSource {
     suspend fun discoverMovies(page: Int): PagedResponse?

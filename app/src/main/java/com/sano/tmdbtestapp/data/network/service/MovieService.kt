@@ -1,7 +1,7 @@
-package com.sano.tmdbtestapp.data.service
+package com.sano.tmdbtestapp.data.network.service
 
-import com.sano.tmdbtestapp.data.pojo.MovieDetailsModel
-import com.sano.tmdbtestapp.data.pojo.PagedResponse
+import com.sano.tmdbtestapp.data.network.pojo.MovieDetailsModel
+import com.sano.tmdbtestapp.data.network.pojo.PagedResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

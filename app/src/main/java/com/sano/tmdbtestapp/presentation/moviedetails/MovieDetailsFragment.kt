@@ -46,6 +46,18 @@ class MovieDetailsFragment : BaseFragment(R.layout.fragment_movie_details) {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        targetFragment?.setMenuVisibility(false);
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        targetFragment?.setMenuVisibility(true);
+    }
+
     private fun render(state: MovieDetailsState) {
         when (state) {
             MovieDetailsState.LoadingState -> progressBar?.visibility = View.VISIBLE
@@ -68,7 +80,9 @@ class MovieDetailsFragment : BaseFragment(R.layout.fragment_movie_details) {
 
     private fun renderErrorState(errorState: MovieDetailsState.ErrorState) {
         progressBar?.visibility = View.GONE
-        Toast.makeText(context, getString(R.string.smth_went_wrong), Toast.LENGTH_LONG).show()
+        Toast.makeText(context, getString(R.string.didnt_find_data), Toast.LENGTH_LONG).show()
+        parentFragmentManager.popBackStack()
+
     }
 
     companion object {
