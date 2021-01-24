@@ -52,9 +52,22 @@ class MovieListFragment: BaseFragment(R.layout.fragment_movie_list) {
         inflater.inflate(R.menu.options_menu, menu)
 
         val searchView = menu.findItem(R.id.search).actionView as SearchView
-        searchView.setOnSearchClickListener {
-            viewModel.intent(MovieListIntent.SearchMovies(searchView.query.toString()))
-        }
+        searchView.isIconifiedByDefault = false
+
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.intent(MovieListIntent.SearchMovies(searchView.query.toString()))
+                return true;
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if(newText.isNullOrEmpty()) {
+                    viewModel.intent(MovieListIntent.ResetDataToPopularMovies)
+                }
+                return true
+            }
+
+        })
     }
 
     private fun render(state: MovieListState) {

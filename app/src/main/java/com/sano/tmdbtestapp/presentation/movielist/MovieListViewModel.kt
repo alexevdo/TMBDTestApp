@@ -56,6 +56,7 @@ class MovieListViewModel : ViewModel() {
                     }
                 }
             }
+            MovieListIntent.ResetDataToPopularMovies -> mutableStateLiveData.value = dataState
         }
     }
 
@@ -85,4 +86,5 @@ sealed class MovieListState {
 sealed class MovieListIntent {
     object LoadPopularMovies : MovieListIntent()
     data class SearchMovies(val query: String) : MovieListIntent()
+    object ResetDataToPopularMovies: MovieListIntent()
 }
