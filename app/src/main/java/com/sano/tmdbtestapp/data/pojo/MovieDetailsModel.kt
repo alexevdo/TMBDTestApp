@@ -16,7 +16,7 @@ data class MovieDetailsModel(
     @SerializedName("homepage")
     val homepage: String? = null,
     @SerializedName("id")
-    val id: Int? = null,
+    val id: Int,
     @SerializedName("imdb_id")
     val imdbId: String? = null,
     @SerializedName("original_language")
@@ -28,7 +28,7 @@ data class MovieDetailsModel(
     @SerializedName("popularity")
     val popularity: Float? = null,
     @SerializedName("poster_path")
-    val posterPath: Any? = null,
+    val posterPath: String? = null,
     @SerializedName("production_companies")
     val productionCompanies: List<ProductionCompanyModel>? = null,
     @SerializedName("production_countries")

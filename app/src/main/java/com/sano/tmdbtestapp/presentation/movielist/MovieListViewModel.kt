@@ -24,6 +24,7 @@ class MovieListViewModel : ViewModel() {
     fun intent(intent: MovieListIntent) {
         when (intent) {
             MovieListIntent.LoadPopularMovies -> {
+                mutableStateLiveData.value = MovieListState.LoadingState
                 viewModelScope.launch {
                     try {
                         val result: PagedEntity<MovieEntity>? = interactor.loadPopularMovies(1)
@@ -40,6 +41,7 @@ class MovieListViewModel : ViewModel() {
                 }
             }
             is MovieListIntent.SearchMovies -> {
+                mutableStateLiveData.value = MovieListState.LoadingState
                 viewModelScope.launch {
                     try {
                         val result = interactor.searchMovies(intent.query)
