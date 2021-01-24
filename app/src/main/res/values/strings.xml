@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TMDBTestApp</string>
+    <string name="smth_went_wrong">Something went wrong</string>
+    <string name="search_title">Search movie</string>
 </resources>

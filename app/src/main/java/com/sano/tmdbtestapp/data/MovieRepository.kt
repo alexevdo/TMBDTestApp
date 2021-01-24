@@ -1,0 +1,22 @@
+package com.sano.tmdbtestapp.data
+
+import com.sano.tmdbtestapp.domain.IMovieRepository
+import com.sano.tmdbtestapp.domain.entity.MovieEntity
+import com.sano.tmdbtestapp.domain.entity.PagedEntity
+
+class MovieRepository(private val networkDataSource: INetworkDataSource): IMovieRepository {
+
+    private val modelMapper: ModelMapper = ModelMapper()
+
+    override suspend fun searchMovies(query: String): PagedEntity<MovieEntity>? {
+        return networkDataSource.searchMovies(query)?.let {
+            modelMapper.pagedResponseToPagedEntity(it)
+        }
+    }
+
+    override suspend fun loadPopularMovies(page: Int): PagedEntity<MovieEntity>? {
+        return networkDataSource.discoverMovies(page)?.let {
+            modelMapper.pagedResponseToPagedEntity(it)
+        }
+    }
+}
