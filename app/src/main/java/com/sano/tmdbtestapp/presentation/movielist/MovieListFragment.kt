@@ -42,6 +42,13 @@ class MovieListFragment: BaseFragment(R.layout.fragment_movie_list) {
 
         val movieList: RecyclerView = view.findViewById(R.id.movieList)
         movieList.adapter = movieListAdapter
+        movieList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (!movieList.canScrollVertically(1)) {
+                    viewModel.intent(MovieListIntent.LoadPopularMovies)
+                }
+            }
+        })
 
         viewModel.intent(MovieListIntent.LoadPopularMovies)
     }
@@ -66,7 +73,6 @@ class MovieListFragment: BaseFragment(R.layout.fragment_movie_list) {
                 }
                 return true
             }
-
         })
     }
 

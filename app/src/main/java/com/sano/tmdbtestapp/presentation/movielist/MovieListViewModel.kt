@@ -27,7 +27,7 @@ class MovieListViewModel : ViewModel() {
                 mutableStateLiveData.value = MovieListState.LoadingState
                 viewModelScope.launch {
                     try {
-                        val result: PagedEntity<MovieEntity>? = interactor.loadPopularMovies(1)
+                        val result: PagedEntity<MovieEntity>? = interactor.loadPopularMovies((dataState?.page ?: 0) + 1 )
                         result?.values?.let {
                             reduceDataState(
                                 MovieListState.DataState(
