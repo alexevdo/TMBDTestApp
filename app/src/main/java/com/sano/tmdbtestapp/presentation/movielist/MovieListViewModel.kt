@@ -20,6 +20,7 @@ class MovieListViewModel : ViewModel() {
         MovieInteractor(MovieRepository(NetworkDataSource(), DbDataSource(TMDBApp.context)))
     private var dataState: MovieListState.DataState? = null
     private var searchDataState: MovieListState.DataState? = null
+    private var searchMode: Boolean = false
 
     private val mutableStateLiveData: MutableLiveData<MovieListState> = MutableLiveData()
     val stateLiveData: LiveData<MovieListState> = mutableStateLiveData
@@ -30,6 +31,9 @@ class MovieListViewModel : ViewModel() {
                 dataState?.let {
                     if(it.page == it.totalPages) return
                 }
+
+                if(searchMode) return
+
                 mutableStateLiveData.value = MovieListState.LoadingState
                 viewModelScope.launch {
                     try {
@@ -51,6 +55,7 @@ class MovieListViewModel : ViewModel() {
             }
             is MovieListIntent.SearchMovies -> {
                 mutableStateLiveData.value = MovieListState.LoadingState
+                searchMode = true
                 viewModelScope.launch {
                     try {
                         val result = interactor.searchMovies(intent.query)
@@ -65,7 +70,10 @@ class MovieListViewModel : ViewModel() {
                     }
                 }
             }
-            MovieListIntent.ResetDataToPopularMovies -> mutableStateLiveData.value = dataState
+            MovieListIntent.ResetDataToPopularMovies -> {
+                mutableStateLiveData.value = dataState
+                searchMode = false
+            }
         }
     }
 
