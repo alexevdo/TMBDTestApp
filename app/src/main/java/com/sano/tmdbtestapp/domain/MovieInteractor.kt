@@ -38,8 +38,10 @@ class MovieInteractor(private val repository: IMovieRepository): IMovieInteracto
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(MovieInteractor::class.simpleName, "Error while loadPopularMovies, trying db")
-            val dbResult = repository.loadSavedPopularMovies()
-            PagedEntity(dbResult, 1, dbResult.size, 1)
+            if(isInitialRequest) {
+                val dbResult = repository.loadSavedPopularMovies()
+                PagedEntity(dbResult, 1, dbResult.size, 1)
+            } else null
         }
     }
 

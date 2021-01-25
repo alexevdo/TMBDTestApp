@@ -10,7 +10,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 // TODO remove from git
-private const val API_KEY = "1cc33b07c9aa5466f88834f7042c9258"
+private const val API_KEY = ""
 
 class NetworkDataSource : INetworkDataSource {
 

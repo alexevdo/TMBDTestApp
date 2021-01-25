@@ -47,6 +47,8 @@ class MovieListViewModel : ViewModel() {
                                     it, result.page, result.totalPages, result.totalResults
                                 )
                             )
+                        } ?: let {
+                            mutableStateLiveData.value = MovieListState.ErrorState(NoSuchElementException())
                         }
                     } catch (e: Exception) {
                         mutableStateLiveData.value = MovieListState.ErrorState(e)
